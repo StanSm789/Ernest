@@ -1,4 +1,5 @@
 ﻿<Page
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     x:Class="App1.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -34,9 +35,9 @@
                 <!--Grid HorizontalAlignment="Left" Height="998" Margin="0,0,0,0" VerticalAlignment="Center" Width="1154">
                     <TextBox x:Name="textBlock" HorizontalAlignment="Left" Height="558" Margin="229,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="750"/>
                 </Grid-->
-                <control:DataGrid x:Name="dataGrid">
+                <controls:DataGrid x:Name="dataGrid">
 
-                </control:DataGrid>
+                </controls:DataGrid>
             </NavigationView>
         </Grid>
     </Grid>
