@@ -53,27 +53,31 @@ namespace App1
 
             if (file != null)
             {
-            //textBlock.Text = await FileIO.ReadTextAsync(file);
-            //this.textBlock.Text = file.Path;
-            string excelFile = await FileIO.ReadTextAsync(file);
-            ExcelParser excelParser = new ExcelParser(studentDao, courseDao);
-            excelParser.WriteToDatabase(excelParser.ReadFromExcel(excelFile));
+                //textBlock.Text = await FileIO.ReadTextAsync(file);
+                //this.textBlock.Text = file.Path;
+                string excelFile = await FileIO.ReadTextAsync(file);
+                ExcelParser excelParser = new ExcelParser(studentDao, courseDao);
+                excelParser.WriteToDatabase(excelParser.ReadFromExcel(excelFile));
 
           
-            textBlock.Text = "";
+                textBlock.Text = "";
 
-            List<Student> students = studentDao.FindAll();
-            foreach (Student student in students)
-            {
-                textBlock.Text = textBlock.Text + "\n" + student.ToString();
-            }
+                List<Student> students = studentDao.FindAll();
 
-            }
-            else
-            {
-                textBlock.Text = "Operation cancelled.";
-            }
 
+
+
+        //    foreach (Student student in students)
+        //    {
+        //        textBlock.Text = textBlock.Text + "\n" + student.ToString();
+        //    }
+        //
+        //    }
+        //    else
+        //    {
+        //        textBlock.Text = "Operation cancelled.";
+        //    }
+        //
         }
 
         private void EraseDatabase_Tapped(object sender, TappedRoutedEventArgs e)

@@ -31,9 +31,12 @@
                     <NavigationViewItemHeader Content="Help"/>
                     <NavigationViewItem Content="README"/>
                 </NavigationView.MenuItems>
-                <Grid HorizontalAlignment="Left" Height="998" Margin="0,0,0,0" VerticalAlignment="Center" Width="1154">
+                <!--Grid HorizontalAlignment="Left" Height="998" Margin="0,0,0,0" VerticalAlignment="Center" Width="1154">
                     <TextBox x:Name="textBlock" HorizontalAlignment="Left" Height="558" Margin="229,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="750"/>
-                </Grid>
+                </Grid-->
+                <control:DataGrid x:Name="dataGrid">
+
+                </control:DataGrid>
             </NavigationView>
         </Grid>
     </Grid>
