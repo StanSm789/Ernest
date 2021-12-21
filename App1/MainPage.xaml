@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="App1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="Gray">
+        <Grid>
+            <NavigationView>
+                <NavigationView.MenuItems>
+                    <NavigationViewItemHeader Content="File"/>
+                    <NavigationViewItem Content="Upload File" Icon="OpenFile" Tapped="NavigationViewItem_Tapped"/>
+                    <NavigationViewItem Content="Erase Database" Icon="Delete" Tapped="EraseDatabase_Tapped"/>
+                    <NavigationViewItemSeparator/>
+                    <NavigationViewItemHeader Content="Find All Courses For Student"/>
+                    <TextBox Name="Get_Courses_ForStudent_Box" Height="30" Width="190" Margin="-11,0,12,0" PlaceholderText="e.g s5092985"></TextBox>
+                    <Button Click="Find_Courses" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
+                    <NavigationViewItemSeparator/>
+                    <NavigationViewItemHeader Content="Find All Students Enrolled in a Course"/>
+                    <TextBox Name="Get_Students_For_Course_Box" Height="30" Width="190" Margin="-11,0,12,0" PlaceholderText="e.g 2808ICT_3215_NA"></TextBox>
+                    <Button Click="Find_Students" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
+                    <NavigationViewItemSeparator/>
+                    <NavigationViewItemHeader Content="Find Student By Name or sNumber"/>
+                    <TextBox Name="Find_Student_By_Keyword" Height="30" Width="190" Margin="-11,0,12,0" PlaceholderText="e.g s5092985 or Smith"></TextBox>
+                    <Button Click="Find_Individual_Student" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
+                    <NavigationViewItemSeparator/>
+                    <NavigationViewItemHeader Content="Help"/>
+                    <NavigationViewItem Content="README"/>
+                </NavigationView.MenuItems>
+                <Grid HorizontalAlignment="Left" Height="998" Margin="0,0,0,0" VerticalAlignment="Center" Width="1154">
+                    <TextBox x:Name="textBlock" HorizontalAlignment="Left" Height="558" Margin="229,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="750"/>
+                </Grid>
+            </NavigationView>
+        </Grid>
+    </Grid>
+</Page>
