@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Windows.Storage;
@@ -105,7 +106,6 @@ namespace App1.Dao.DataRetrieval
 
             return result;
         }
-
     }
 
 }

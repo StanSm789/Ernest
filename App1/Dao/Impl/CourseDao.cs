@@ -198,8 +198,29 @@ namespace App1.Dao.Impl
                 }
 
                 db.Close();
+            }       
+        }
+
+        public void EraseDatabase()
+        {
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                String DropStudentsCourses = "DELETE FROM STUDENTS_COURSES;";
+                SqliteCommand DropStudentsCoursesCommand = new SqliteCommand(DropStudentsCourses, db);
+                DropStudentsCoursesCommand.ExecuteReader();
+
+                String DropCourses = "DELETE FROM COURSES;";
+                SqliteCommand DropCoursesCommand = new SqliteCommand(DropCourses, db);
+                DropCoursesCommand.ExecuteReader();
+
+                String DropStudents = "DELETE FROM STUDENTS;";
+                SqliteCommand DropStudentsCommand = new SqliteCommand(DropStudents, db);
+                DropStudentsCommand.ExecuteReader();
             }
-                   
         }
 
     }
