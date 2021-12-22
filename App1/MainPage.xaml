@@ -28,6 +28,7 @@
                     <NavigationViewItemHeader Content="Find Student By Name or sNumber"/>
                     <TextBox Name="Find_Student_By_Keyword_Box" Height="30" Width="190" Margin="0,0,12,0" PlaceholderText="e.g s5092985 or Smith" HorizontalAlignment="Right"></TextBox>
                     <Button Click="Find_Individual_Student" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
+                    <HyperlinkButton Content="Add New Student" Click="HyperlinkButton_Click" HorizontalAlignment="Center"/>
                     <NavigationViewItemSeparator/>
                     <NavigationViewItemHeader Content="Help"/>
                     <NavigationViewItem Content="README"/>

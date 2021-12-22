@@ -93,5 +93,10 @@ namespace App1
             dataGrid.ItemsSource = students;
         }
 
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(AddStudentForm));
+        }
+
     }
 }
