@@ -87,7 +87,7 @@ namespace App1.Dao.DataRetrieval
                 db.Open();
 
                 var cmd = db.CreateCommand();
-                cmd.CommandText = "SELECT STUDENT_ID, F_NAME, L_NAME FROM STUDENTS WHERE (STUDENT_ID LIKE '@keyword' OR F_NAME LIKE '@keyword' OR L_NAME LIKE '@keyword');";
+                cmd.CommandText = "SELECT * FROM STUDENTS WHERE STUDENT_ID LIKE @keyword OR F_NAME LIKE @keyword OR L_NAME LIKE @keyword;";
                 cmd.Parameters.AddWithValue("@keyword", keyword.Trim());
 
                 using (var reader = cmd.ExecuteReader())

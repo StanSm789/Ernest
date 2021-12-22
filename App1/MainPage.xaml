@@ -11,7 +11,7 @@
 
     <Grid Background="Gray">
         <Grid>
-            <NavigationView>
+            <NavigationView HorizontalAlignment="Right" Width="1500">
                 <NavigationView.MenuItems>
                     <NavigationViewItemHeader Content="File"/>
                     <NavigationViewItem Content="Upload File" Icon="OpenFile" Tapped="NavigationViewItem_Tapped"/>
@@ -26,15 +26,12 @@
                     <Button Click="Find_Students" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
                     <NavigationViewItemSeparator/>
                     <NavigationViewItemHeader Content="Find Student By Name or sNumber"/>
-                    <TextBox Name="Find_Student_By_Keyword" Height="30" Width="190" Margin="-11,0,12,0" PlaceholderText="e.g s5092985 or Smith"></TextBox>
+                    <TextBox Name="Find_Student_By_Keyword_Box" Height="30" Width="190" Margin="0,0,12,0" PlaceholderText="e.g s5092985 or Smith" HorizontalAlignment="Right"></TextBox>
                     <Button Click="Find_Individual_Student" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
                     <NavigationViewItemSeparator/>
                     <NavigationViewItemHeader Content="Help"/>
                     <NavigationViewItem Content="README"/>
                 </NavigationView.MenuItems>
-                <!--Grid HorizontalAlignment="Left" Height="998" Margin="0,0,0,0" VerticalAlignment="Center" Width="1154">
-                    <TextBox x:Name="textBlock" HorizontalAlignment="Left" Height="558" Margin="229,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="750"/>
-                </Grid-->
                 <controls:DataGrid x:Name="dataGrid">
 
                 </controls:DataGrid>

@@ -88,13 +88,9 @@ namespace App1
 
         private void Find_Individual_Student(object sender, RoutedEventArgs e)
         {
-            /*textBlock.Text = "";
-            string keyword = Find_Student_By_Keyword.Text.ToString();
+            string keyword = Find_Student_By_Keyword_Box.Text.ToString();
             List<string> students = dataRetrievalClass.FindIndividualStudent(keyword);
-            foreach (string student in students)
-            {
-                textBlock.Text = textBlock.Text + "\n" + student;
-            }*/
+            dataGrid.ItemsSource = students;
         }
 
     }
