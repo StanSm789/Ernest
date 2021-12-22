@@ -201,6 +201,9 @@ namespace App1.Dao.Impl
             }       
         }
 
+        /*
+         * This method removes data from the STUDENTS and STUDENTS_COURSES tables. It is used by ExcelParser class under the Pasrer folder
+         * */
         public void EraseDatabase()
         {
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
@@ -213,9 +216,9 @@ namespace App1.Dao.Impl
                 SqliteCommand DropStudentsCoursesCommand = new SqliteCommand(DropStudentsCourses, db);
                 DropStudentsCoursesCommand.ExecuteReader();
 
-                String DropCourses = "DELETE FROM COURSES;";
+                /*String DropCourses = "DELETE FROM COURSES;";
                 SqliteCommand DropCoursesCommand = new SqliteCommand(DropCourses, db);
-                DropCoursesCommand.ExecuteReader();
+                DropCoursesCommand.ExecuteReader();*/
 
                 String DropStudents = "DELETE FROM STUDENTS;";
                 SqliteCommand DropStudentsCommand = new SqliteCommand(DropStudents, db);

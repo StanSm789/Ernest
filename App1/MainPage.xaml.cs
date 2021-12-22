@@ -55,68 +55,34 @@ namespace App1
 
             if (file != null)
             {
-                //textBlock.Text = await FileIO.ReadTextAsync(file);
-                //this.textBlock.Text = file.Path;
                 string excelFile = await FileIO.ReadTextAsync(file);
                 ExcelParser excelParser = new ExcelParser(studentDao, courseDao);
                 excelParser.WriteToDatabase(excelParser.ReadFromExcel(excelFile));
 
-
-                //        textBlock.Text = "";
-
                 List<Student> students = studentDao.FindAll();
                 dataGrid.ItemsSource = students;
-
-
-
-
-                //    foreach (Student student in students)
-                //    {
-                //        textBlock.Text = textBlock.Text + "\n" + student.ToString();
-                //    }
-                //
-                //    }
-                //    else
-                //    {
-                //        textBlock.Text = "Operation cancelled.";
-                //    }
-                //
             }
         }
 
         private void EraseDatabase_Tapped(object sender, TappedRoutedEventArgs e)
         {
             tableCreator.EraseDatabase(DatabaseName);
-            //textBlock.Text = "All data has been successfully removed from the database.";
         }
 
         private void Find_Courses(object sender, RoutedEventArgs e)
         {
-
-        //    textBlock.Text = "";
                 string studentId = Get_Courses_ForStudent_Box.Text.ToString();
                 List<string> courses = dataRetrievalClass.GetCoursesForStudent(studentId);
 
                 dataGrid.ItemsSource = courses;
-
-        //    foreach(string course in courses)
-        //    {
-        //        textBlock.Text = textBlock.Text + "\n" + course;
-        //    }
         }
 
         private void Find_Students(object sender, RoutedEventArgs e)
         {
-        //    textBlock.Text = "";
                 string courseId = Get_Students_For_Course_Box.Text.ToString();
                 List<string> students = dataRetrievalClass.GetStudentsForCourse(courseId);
 
                 dataGrid.ItemsSource = students;
-
-        //    foreach (string student in students)
-        //    {
-        //        textBlock.Text = textBlock.Text + "\n" + student;
-        //    }
         }
 
         private void Find_Individual_Student(object sender, RoutedEventArgs e)

@@ -217,7 +217,10 @@ namespace App1.Dao.Impl
             }
         }
 
-        public int CheckIfStudentATableIsEmpty()
+        /*
+         * checking if STUDENTS table is empty. This method is used by ExcelParser class under the Parser folder
+         * */
+        public int CheckIfStudentATableIsEmpty() 
         {
             string result = null;
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
