@@ -100,8 +100,9 @@ namespace App1.Dao.Impl
 
                     var insertCmd = db.CreateCommand();
 
-                    insertCmd.CommandText = $"insert into STUDENTS values ('{student.Id}', '{student.FirstName}', " +
-                    $"'{student.LastName}');";
+                    insertCmd.CommandText = $"insert into STUDENTS Select '{student.Id}', '{student.FirstName}', '{student.LastName}' " +
+                        $"Where not exists(select * from STUDENTS where STUDENT_ID='{student.Id}');";
+
                     insertCmd.ExecuteNonQuery();
 
                     transaction.Commit();

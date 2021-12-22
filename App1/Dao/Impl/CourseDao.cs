@@ -85,18 +85,17 @@ namespace App1.Dao.Impl
 
                 using (var transaction = db.BeginTransaction())
                 {
-
                     var insertCmd = db.CreateCommand();
-                    insertCmd.CommandText = $"insert into COURSES values ('{course.Id}');";
+
+                    insertCmd.CommandText = $"insert into COURSES Select '{course.Id}' " +
+                        $"Where not exists(select * from COURSES where COURSE_ID='{course.Id}');";
                     insertCmd.ExecuteNonQuery();
 
                     transaction.Commit();
                 }
 
                 db.Close();
-
             }
-
         }
 
         public void Update(Course course)
@@ -142,30 +141,6 @@ namespace App1.Dao.Impl
                     del.ExecuteNonQuery();
 
                     insertCmd.CommandText = $"DELETE FROM COURSES WHERE COURSE_ID ='{id}';";
-                    insertCmd.ExecuteNonQuery();
-
-                    transaction.Commit();
-                }
-
-                db.Close();
-            }
-
-        }
-
-        public void InsertDistinctCourse(string courseName)
-        {
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
-            using (SqliteConnection db =
-              new SqliteConnection($"Filename={dbpath}"))
-            {
-                db.Open();
-
-                using (var transaction = db.BeginTransaction())
-                {
-                    var insertCmd = db.CreateCommand();
-
-                    insertCmd.CommandText = $"insert into COURSES Select '{courseName}' " +
-                        $"Where not exists(select * from COURSES where COURSE_ID='{courseName}');";
                     insertCmd.ExecuteNonQuery();
 
                     transaction.Commit();

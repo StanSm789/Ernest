@@ -45,7 +45,7 @@ namespace App1.Parser
             {
                 for (int i = 0; i < _data.Count; i++)
                 {
-                    CourseDao.InsertDistinctCourse(_data[i].ChildCourse);
+                    CourseDao.Save(new Course.Builder().WithId(_data[i].ChildCourse).Build());
 
                     Student student = new Student.Builder().WithId(_data[i].StudentId)
                             .WithFirstName(_data[i].FirstName).WithLastName(_data[i].LastName).Build();
@@ -63,7 +63,7 @@ namespace App1.Parser
 
                 for (int i = 0; i < unitedList.Count; i++)
                 {
-                    CourseDao.InsertDistinctCourse(unitedList[i].ChildCourse);
+                    CourseDao.Save(new Course.Builder().WithId(_data[i].ChildCourse).Build());
 
                     Student student = new Student.Builder().WithId(unitedList[i].StudentId)
                             .WithFirstName(unitedList[i].FirstName).WithLastName(unitedList[i].LastName).Build();
