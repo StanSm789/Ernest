@@ -1,5 +1,6 @@
 ﻿using App1.Models;
 using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Windows.Storage;
@@ -214,6 +215,35 @@ namespace App1.Dao.Impl
 
                 db.Close();
             }
+        }
+
+        /*
+         * checking if STUDENTS table is empty. This method is used by ExcelParser class under the Parser folder
+         * */
+        public int CheckIfStudentATableIsEmpty() 
+        {
+            string result = null;
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                var cmd = db.CreateCommand();
+                cmd.CommandText = "select count(*) from STUDENTS;";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result = reader.GetString(0);
+                    }
+                }
+
+                db.Close();
+            }
+
+            return Int32.Parse(result);
         }
 
         private void UpdateStudentsCourses(Student student)

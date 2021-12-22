@@ -3,9 +3,6 @@ using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace App1.Dao.Impl
@@ -198,8 +195,32 @@ namespace App1.Dao.Impl
                 }
 
                 db.Close();
+            }       
+        }
+
+        /*
+         * This method removes data from the STUDENTS and STUDENTS_COURSES tables. It is used by ExcelParser class under the Pasrer folder
+         * */
+        public void EraseDatabase()
+        {
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                String DropStudentsCourses = "DELETE FROM STUDENTS_COURSES;";
+                SqliteCommand DropStudentsCoursesCommand = new SqliteCommand(DropStudentsCourses, db);
+                DropStudentsCoursesCommand.ExecuteReader();
+
+                /*String DropCourses = "DELETE FROM COURSES;";
+                SqliteCommand DropCoursesCommand = new SqliteCommand(DropCourses, db);
+                DropCoursesCommand.ExecuteReader();*/
+
+                String DropStudents = "DELETE FROM STUDENTS;";
+                SqliteCommand DropStudentsCommand = new SqliteCommand(DropStudents, db);
+                DropStudentsCommand.ExecuteReader();
             }
-                   
         }
 
     }

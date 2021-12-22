@@ -122,12 +122,14 @@
     <Compile Include="Dao\CrudDao.cs" />
     <Compile Include="Dao\DataRetrieval\DataRetrievalClass.cs" />
     <Compile Include="Dao\Impl\CourseDao.cs" />
+    <Compile Include="Dao\Impl\NetworkDao.cs" />
     <Compile Include="Dao\Impl\StudentDao.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Network.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Parser\ExcelParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

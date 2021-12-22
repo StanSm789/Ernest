@@ -3,8 +3,6 @@ using App1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App1.Parser
 {
@@ -12,11 +10,13 @@ namespace App1.Parser
     {
         private StudentDao StudentDao;
         private CourseDao CourseDao;
+        private NetworkDao NetworkDao;
 
-        public ExcelParser(StudentDao studentDao, CourseDao courseDao)
+        public ExcelParser(StudentDao studentDao, CourseDao courseDao, NetworkDao networkDao)
         {
             StudentDao = studentDao;
             CourseDao = courseDao;
+            NetworkDao = networkDao;
         }
 
         public List<Obj> ReadFromExcel(string inputString)
@@ -41,16 +41,43 @@ namespace App1.Parser
 
         public void WriteToDatabase(List<Obj> _data)
         {
-            for (int i = 0; i < _data.Count; i++)
+            if(StudentDao.CheckIfStudentATableIsEmpty() == 0) // checking if students table does not exist and insert new data
             {
-                CourseDao.InsertDistinctCourse(_data[i].ChildCourse);
+                for (int i = 0; i < _data.Count; i++)
+                {
+                    CourseDao.InsertDistinctCourse(_data[i].ChildCourse);
 
-                Student student = new Student.Builder().WithId(_data[i].StudentId)
-                        .WithFirstName(_data[i].FirstName).WithLastName(_data[i].LastName).Build();
-                StudentDao.Save(student);
+                    Student student = new Student.Builder().WithId(_data[i].StudentId)
+                            .WithFirstName(_data[i].FirstName).WithLastName(_data[i].LastName).Build();
+                    StudentDao.Save(student);
 
-                CourseDao.SaveStudentCourse(_data[i].StudentId, _data[i].ChildCourse);
+                    CourseDao.SaveStudentCourse(_data[i].StudentId, _data[i].ChildCourse);
+                }
+            } else // if database already has data, update the database with new entries and remove students who dropped out
+            {
+                List<Obj> existingStudents = GetAllExistingStudents(); //getting all students from the db
+                List<Obj> intersectStudents = _data.Select(i => i).Intersect(existingStudents).ToList(); //intersecting the existing students with new students
+                List<Obj> unitedList = intersectStudents.Union(_data).ToList(); // union the intersected students with new students
+
+                CourseDao.EraseDatabase(); // removing existing data from the database
+
+                for (int i = 0; i < unitedList.Count; i++)
+                {
+                    CourseDao.InsertDistinctCourse(unitedList[i].ChildCourse);
+
+                    Student student = new Student.Builder().WithId(unitedList[i].StudentId)
+                            .WithFirstName(unitedList[i].FirstName).WithLastName(unitedList[i].LastName).Build();
+                    StudentDao.Save(student);
+
+                    CourseDao.SaveStudentCourse(unitedList[i].StudentId, unitedList[i].ChildCourse);
+
+                    if(StudentDao.FindById(student.Id) == null) //if student does not exist, remove their networks from NETWORKS table
+                    {
+                        NetworkDao.DeleteByStudentId(student.Id);
+                    }
+                }
             }
+            
         }
 
         private List<string[]> SplitString(string inputString)
@@ -63,6 +90,27 @@ namespace App1.Parser
             foreach (string line in lines)
             {
                 result.Add(line.Split(','));
+            }
+
+            return result;
+        }
+
+        private List<Obj> GetAllExistingStudents() //getting all existing students from the database
+        {
+            List<Student> existingStudents = StudentDao.FindAll();
+            List<Obj> result = new List<Obj>();
+
+            foreach(Student student in existingStudents)
+            {
+               for (int i = 0; i < student.Courses.Count; i++)
+                {
+                    Obj obj = new Obj();
+                    obj.StudentId = student.Id;
+                    obj.FirstName = student.FirstName;
+                    obj.LastName = student.LastName;
+                    obj.ChildCourse = student.Courses[i].ToString();
+                    result.Add(obj);
+                }
             }
 
             return result;
