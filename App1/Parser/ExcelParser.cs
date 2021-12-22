@@ -3,8 +3,6 @@ using App1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App1.Parser
 {
@@ -12,11 +10,13 @@ namespace App1.Parser
     {
         private StudentDao StudentDao;
         private CourseDao CourseDao;
+        private NetworkDao NetworkDao;
 
-        public ExcelParser(StudentDao studentDao, CourseDao courseDao)
+        public ExcelParser(StudentDao studentDao, CourseDao courseDao, NetworkDao networkDao)
         {
             StudentDao = studentDao;
             CourseDao = courseDao;
+            NetworkDao = networkDao;
         }
 
         public List<Obj> ReadFromExcel(string inputString)
@@ -70,6 +70,11 @@ namespace App1.Parser
                     StudentDao.Save(student);
 
                     CourseDao.SaveStudentCourse(unitedList[i].StudentId, unitedList[i].ChildCourse);
+
+                    if(StudentDao.FindById(student.Id) == null) //if student does not exist, remove their networks from NETWORKS table
+                    {
+                        NetworkDao.DeleteByStudentId(student.Id);
+                    }
                 }
             }
             

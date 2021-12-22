@@ -3,9 +3,6 @@ using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace App1.Dao.Impl

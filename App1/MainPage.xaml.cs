@@ -32,6 +32,7 @@ namespace App1
         public static string DatabaseName = "students.db";
         public StudentDao studentDao = new StudentDao(DatabaseName);
         public CourseDao courseDao = new CourseDao(DatabaseName);
+        public NetworkDao networkDao = new NetworkDao(DatabaseName);
         public DataRetrievalClass dataRetrievalClass = new DataRetrievalClass(DatabaseName);
         public TableCreator tableCreator = new TableCreator();
 
@@ -56,7 +57,7 @@ namespace App1
             if (file != null)
             {
                 string excelFile = await FileIO.ReadTextAsync(file);
-                ExcelParser excelParser = new ExcelParser(studentDao, courseDao);
+                ExcelParser excelParser = new ExcelParser(studentDao, courseDao, networkDao);
                 excelParser.WriteToDatabase(excelParser.ReadFromExcel(excelFile));
 
                 List<Student> students = studentDao.FindAll();

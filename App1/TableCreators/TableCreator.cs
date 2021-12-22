@@ -39,6 +39,11 @@ namespace App1.TableCreators
                 "FOREIGN KEY(COURSE_ID) REFERENCES COURSES(COURSE_ID), PRIMARY KEY(STUDENT_ID, COURSE_ID)); ";
                 SqliteCommand createStudentsCoursesTable = new SqliteCommand(createStudentsCoursesTableCmd, db);
                 createStudentsCoursesTable.ExecuteReader();
+
+                String createNetworksTableCmd = "CREATE TABLE if not exists NETWORKS " +
+                    "(ID INTEGER PRIMARY KEY AUTOINCREMENT, STUDENT_ID VARCHAR(8), SUBNET_MASK VARCHAR(15) UNIQUE);";
+                SqliteCommand createNetworksTable = new SqliteCommand(createNetworksTableCmd, db);
+                createNetworksTable.ExecuteReader();
             }
         }
 
@@ -49,6 +54,10 @@ namespace App1.TableCreators
               new SqliteConnection($"Filename={dbpath}"))
             {
                 db.Open();
+
+                String DropNetworksTable = "DELETE FROM NETWORKS;";
+                SqliteCommand DropNetworksTableCommand = new SqliteCommand(DropNetworksTable, db);
+                DropNetworksTableCommand.ExecuteReader();
 
                 String DropStudentsCourses = "DELETE FROM STUDENTS_COURSES;";
                 SqliteCommand DropStudentsCoursesCommand = new SqliteCommand(DropStudentsCourses, db);
