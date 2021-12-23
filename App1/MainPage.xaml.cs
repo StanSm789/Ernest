@@ -93,6 +93,14 @@ namespace App1
             dataGrid.ItemsSource = students;
         }
 
+        private void Find_Networks_By_Student_Id(object sender, RoutedEventArgs e)
+        {
+            string studentId = Find_Networks_By_Student_Id_Box.Text.ToString();
+            List<string> subnetMasks = dataRetrievalClass.GetSubnetMasksByStudentId(studentId);
+
+            dataGrid.ItemsSource = subnetMasks;
+        }
+
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AddStudentForm));

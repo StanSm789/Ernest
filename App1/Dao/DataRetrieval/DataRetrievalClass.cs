@@ -106,6 +106,37 @@ namespace App1.Dao.DataRetrieval
 
             return result;
         }
+
+        public List<string> GetSubnetMasksByStudentId(string studentId)
+        {
+            List<string> result = new List<string>();
+
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                var cmd = db.CreateCommand();
+                cmd.CommandText = "select SUBNET_MASK from NETWORKS where STUDENT_ID=@id;";
+                cmd.Parameters.AddWithValue("@id", studentId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string courseId = reader.GetString(0);
+
+                        result.Add(courseId);
+                    }
+                }
+
+                db.Close();
+            }
+
+            return result;
+        }
+
     }
 
 }
