@@ -32,10 +32,18 @@ namespace App1
         public CourseDao courseDao = new CourseDao(DatabaseName);
         public NetworkDao networkDao = new NetworkDao(DatabaseName);
         public DataRetrievalClass dataRetrievalClass = new DataRetrievalClass(DatabaseName);
+        public List<string> CoursesList = new List<string>();
+        public string combo;
 
         public AddStudentForm()
         {
             this.InitializeComponent();
+
+            List<Course> courses = courseDao.FindAll();
+            foreach (Course course in courses)
+            {
+                CoursesList.Add(course.Id);
+            }
         }
 
         /*
@@ -101,7 +109,7 @@ namespace App1
         void SaveCourse_To_Student_Click(object sender, RoutedEventArgs e)
         {
             string studentNumber = this.student_Number.Text.Trim();
-            string course = this.course.Text.Trim();
+            string course = combo;
 
             if (studentDao.FindById(studentNumber) == null)
             {
@@ -136,6 +144,13 @@ namespace App1
                 return (true);
             else
                 return (false);
+        }
+
+        private void ComboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           ComboBox comboBox = sender as ComboBox;
+
+           combo = comboBox.SelectedValue.ToString(); 
         }
     }
 }

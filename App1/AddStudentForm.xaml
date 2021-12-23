@@ -49,7 +49,7 @@
 
                     <TextBlock Text="Add Course To Student" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBox x:Name="student_Number" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" RenderTransformOrigin="0.937,0.466"/>
-                    <TextBox x:Name="course" PlaceholderText="e.g 2808ICT_3215_NA" Header="Course" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
+                    <ComboBox Margin="0,24,0,0" Name="ComboxBox1" Header= "Course" ItemsSource="{x:Bind CoursesList}" Width="150" SelectionChanged="ComboBox1_SelectionChanged"></ComboBox>
 
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Save" Margin="0,24" Click="SaveCourse_To_Student_Click"/>
