@@ -78,6 +78,24 @@ namespace App1
         }
 
         /*
+         * adding new course to the db
+         * */
+        void SaveNewCourse_Click(object sender, RoutedEventArgs e)
+        {
+            string courseId = this.courseDetails.Text.Trim();
+
+            if (courseDao.FindById(courseId) != null)
+            {
+                this.ErrorMessageForAddingCourse.Text = "Course already exists";
+            } 
+            else
+            {
+                courseDao.Save(new Course.Builder().WithId(courseId).Build());
+                this.Frame.Navigate(typeof(MainPage));
+            }
+        }
+
+        /*
          * saving a course to an existing student
          * */
         void SaveCourse_To_Student_Click(object sender, RoutedEventArgs e)
@@ -92,6 +110,7 @@ namespace App1
             else
             {
                 courseDao.SaveStudentCourse(studentNumber, course);
+                this.Frame.Navigate(typeof(MainPage));
             }
         }
 

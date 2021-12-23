@@ -35,7 +35,7 @@
                     <TextBox x:Name="courseDetails" PlaceholderText="e.g 2808ICT_3215_NA" Header="Course" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
 
                     <StackPanel Orientation="Horizontal">
-                        <!--<Button Content="Save" Margin="0,24" Click="SaveNewCourse_Click"/>-->
+                        <Button Content="Save" Margin="0,24" Click="SaveNewCourse_Click"/>
                         <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
                         <TextBlock x:Name="ErrorMessageForAddingCourse" Margin="0,24" TextWrapping="Wrap" Text="" Width="241" FontWeight="Bold" Foreground="Red" FontSize="10"/>
 
