@@ -33,7 +33,7 @@ namespace App1
         public NetworkDao networkDao = new NetworkDao(DatabaseName);
         public DataRetrievalClass dataRetrievalClass = new DataRetrievalClass(DatabaseName);
         public List<string> CoursesList = new List<string>();
-        public string combo;
+        public string combo; // selection for combo box; "used in add course to studend"
 
         public AddStudentForm()
         {
@@ -42,7 +42,7 @@ namespace App1
             List<Course> courses = courseDao.FindAll();
             foreach (Course course in courses)
             {
-                CoursesList.Add(course.Id);
+                CoursesList.Add(course.Id); // combo box selection
             }
         }
 
@@ -122,6 +122,29 @@ namespace App1
             }
         }
 
+        void Save_Network_Click(object sender, RoutedEventArgs e)
+        {
+            string sNumber = this.studentNumber.Text.Trim();
+            string network = this.network.Text.Trim();
+
+            if (studentDao.FindById(sNumber) == null)
+            {
+                this.ErrorMessageNetwork.Text = "Student with this sNumber does not exists";
+            }
+            else
+            {
+                try
+                {
+                    networkDao.Save(new Network.Builder().WithStudentId(sNumber).WithSubnetMask(network).Build());
+                    this.Frame.Navigate(typeof(MainPage));
+                } catch
+                {
+                    this.ErrorMessageNetwork.Text = "This subnet mask already belongst to another student";
+
+                }
+            }
+        }
+
         private bool IsValidName(string name)
         {
             string strRegex = @"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
@@ -146,6 +169,9 @@ namespace App1
                 return (false);
         }
 
+        /*
+         * combo box selection
+         * */
         private void ComboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
            ComboBox comboBox = sender as ComboBox;
