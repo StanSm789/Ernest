@@ -38,18 +38,33 @@ namespace App1
             this.InitializeComponent();
         }
 
+        /*
+         * going back to the main page
+         * */
         void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
         }
 
+        /*
+         * adding new student to the db
+         * */
         void SaveStudentButton_Click(object sender, RoutedEventArgs e)
         {
             string newStudentNumber = this.sNumber.Text.Trim();
             string fName = this.FirstName.Text.Trim();
             string lName = this.LastName.Text.Trim();
-           
-            if (studentDao.FindById(newStudentNumber) != null)
+
+            if (!IsValidStudentNumber(newStudentNumber))
+            {
+                this.ErrorMessage.Text = "Please insert valid sNumber";
+            } 
+            else if(!IsValidName(fName) || !IsValidName(lName)) 
+            {
+                this.ErrorMessage.Text = "Please insert correct Name";
+            }
+
+            else if (studentDao.FindById(newStudentNumber) != null)
             {
                 this.ErrorMessage.Text = "Student with this sNumber already exists";
             }
@@ -59,6 +74,24 @@ namespace App1
                 new Student.Builder().WithId(newStudentNumber).WithFirstName(fName).WithLastName(lName).Build();
                 studentDao.Save(student);
                 this.Frame.Navigate(typeof(MainPage));
+            }
+        }
+
+        /*
+         * saving a course to an existing student
+         * */
+        void SaveCourse_To_Student_Click(object sender, RoutedEventArgs e)
+        {
+            string studentNumber = this.student_Number.Text.Trim();
+            string course = this.course.Text.Trim();
+
+            if (studentDao.FindById(studentNumber) == null)
+            {
+                this.ErrorMessageForAddingCourse_To_Student.Text = "Student with this sNumber does not exists";
+            } 
+            else
+            {
+                courseDao.SaveStudentCourse(studentNumber, course);
             }
         }
 
@@ -76,7 +109,7 @@ namespace App1
 
         private bool IsValidStudentNumber(string sNumber)
         {
-            string strRegex = @"([s]\d{7})";
+            string strRegex = @"[s]\d{7}";
 
             Regex re = new Regex(strRegex);
 

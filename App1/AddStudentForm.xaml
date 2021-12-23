@@ -13,31 +13,51 @@
 
             <PivotItem Header="Add New Student" Margin="20">
                 <StackPanel>
+
                     <TextBlock Text="New Student" Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox x:Name="sNumber" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName" RenderTransformOrigin="0.937,0.466"/>
-                    <TextBox x:Name="FirstName" Header="First Name" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
-                    <TextBox x:Name="LastName" Header="Last Name" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+                    <TextBox x:Name="sNumber" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" RenderTransformOrigin="0.937,0.466"/>
+                    <TextBox x:Name="FirstName" Header="First Name" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
+                    <TextBox x:Name="LastName" Header="Last Name" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left"/>
 
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Save" Margin="0,24" Click="SaveStudentButton_Click"/>
                         <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
                         <TextBlock x:Name="ErrorMessage" Margin="0,24" TextWrapping="Wrap" Text="" Width="241" FontWeight="Bold" Foreground="Red" FontSize="10"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </PivotItem>
+
+            <PivotItem Header="Add New Course" Margin="20">
+                <StackPanel>
+                    
+                    <TextBlock Text="Add Course" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBox x:Name="courseDetails" PlaceholderText="e.g 2808ICT_3215_NA" Header="Course" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
+
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Button Content="Save" Margin="0,24" Click="SaveNewCourse_Click"/>-->
+                        <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+                        <TextBlock x:Name="ErrorMessageForAddingCourse" Margin="0,24" TextWrapping="Wrap" Text="" Width="241" FontWeight="Bold" Foreground="Red" FontSize="10"/>
 
                     </StackPanel>
+                    
                 </StackPanel>
             </PivotItem>
 
             <PivotItem Header="Add Course To Student" Margin="20">
                 <StackPanel>
-                    <TextBlock Text="New Student" Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox x:Name="student_Number" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName" RenderTransformOrigin="0.937,0.466"/>
-                    <TextBox x:Name="First_Name" Header="First Name" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
-                    <TextBox x:Name="Last_Name" Header="Last Name" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+
+                    <TextBlock Text="Add Course To Student" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBox x:Name="student_Number" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" RenderTransformOrigin="0.937,0.466"/>
+                    <TextBox x:Name="course" PlaceholderText="e.g 2808ICT_3215_NA" Header="Course" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
 
                     <StackPanel Orientation="Horizontal">
-                        <!--<Button Content="Save" Margin="0,24" Click="SaveButton_Click"/>-->
+                        <Button Content="Save" Margin="0,24" Click="SaveCourse_To_Student_Click"/>
                         <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+                        <TextBlock x:Name="ErrorMessageForAddingCourse_To_Student" Margin="0,24" TextWrapping="Wrap" Text="" Width="241" FontWeight="Bold" Foreground="Red" FontSize="10"/>
+
                     </StackPanel>
+
                 </StackPanel>
             </PivotItem>
 
