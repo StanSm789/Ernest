@@ -107,6 +107,9 @@ namespace App1.Dao.DataRetrieval
             return result;
         }
 
+        /*
+         * The method is used to find subnet masks by student id
+         * */
         public List<string> GetSubnetMasksByStudentId(string studentId)
         {
             List<string> result = new List<string>();
