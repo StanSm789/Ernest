@@ -9,6 +9,48 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <HyperlinkButton Content="Go Back To The Main Page" Click="Return_Click" HorizontalAlignment="Center"/>
+        <Pivot>
+
+            <PivotItem Header="Add New Student" Margin="20">
+                <StackPanel>
+                    <TextBlock Text="New Student" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBox x:Name="sNumber" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName" RenderTransformOrigin="0.937,0.466"/>
+                    <TextBox x:Name="FirstName" Header="First Name" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
+                    <TextBox x:Name="LastName" Header="Last Name" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Button Content="Save" Margin="0,24" Click="SaveButton_Click"/>-->
+                        <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </PivotItem>
+
+            <PivotItem Header="Add Course To Student" Margin="20">
+                <StackPanel>
+                    <TextBlock Text="New Student" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBox x:Name="student_Number" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName" RenderTransformOrigin="0.937,0.466"/>
+                    <TextBox x:Name="First_Name" Header="First Name" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
+                    <TextBox x:Name="Last_Name" Header="Last Name" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Button Content="Save" Margin="0,24" Click="SaveButton_Click"/>-->
+                        <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </PivotItem>
+
+            <PivotItem Header="Add Network To Student" Margin="20">
+                <StackPanel>
+                    <TextBlock Text="New Student" Margin="0,24,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBox x:Name="studentNumber" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName" RenderTransformOrigin="0.937,0.466"/>
+                    <TextBox x:Name="First_Name_of_the_student" Header="First Name" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
+                    <TextBox x:Name="Last_Name_of_the_student" Header="Last Name" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Button Content="Save" Margin="0,24" Click="SaveButton_Click"/>-->
+                        <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>
