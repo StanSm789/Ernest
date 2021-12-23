@@ -46,8 +46,10 @@ namespace App1.Dao.Impl
                 db.Close();
 
                 List<Course> courses = FindCoursesForStudent(id);
-                result.SetCourses(courses);
-
+                if (courses.Count != 0)
+                {
+                    result.SetCourses(courses);
+                }
             }
 
             return result;

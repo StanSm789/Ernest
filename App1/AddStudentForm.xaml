@@ -19,8 +19,10 @@
                     <TextBox x:Name="LastName" Header="Last Name" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
 
                     <StackPanel Orientation="Horizontal">
-                        <!--<Button Content="Save" Margin="0,24" Click="SaveButton_Click"/>-->
+                        <Button Content="Save" Margin="0,24" Click="SaveStudentButton_Click"/>
                         <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+                        <TextBlock x:Name="ErrorMessage" Margin="0,24" TextWrapping="Wrap" Text="" Width="241" FontWeight="Bold" Foreground="Red" FontSize="10"/>
+
                     </StackPanel>
                 </StackPanel>
             </PivotItem>
