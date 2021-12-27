@@ -35,11 +35,19 @@ namespace App1
         public NetworkDao networkDao = new NetworkDao(DatabaseName);
         public DataRetrievalClass dataRetrievalClass = new DataRetrievalClass(DatabaseName);
         public TableCreator tableCreator = new TableCreator();
+        public List<string> CoursesList = new List<string>(); // List for storing courses that appear in the database
+        public string combo; // selection for combo box; "used in add course to studend"
 
         public MainPage()
         {
             this.InitializeComponent();
             dataGrid.ItemsSource = studentDao.FindAll(); // fitch student table everytime when open the App
+
+            List<Course> courses = courseDao.FindAll();
+            foreach (Course course in courses)
+            {
+                CoursesList.Add(course.Id); // combo box selection
+            }
         }
 
         private async void NavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -63,11 +71,39 @@ namespace App1
                 List<Student> students = studentDao.FindAll();
                 dataGrid.ItemsSource = students;
             }
+
+            List<Course> courses = courseDao.FindAll();
+            foreach (Course course in courses)
+            {
+                CoursesList.Add(course.Id); // combo box selection
+            }
         }
 
-        private void EraseDatabase_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void EraseDatabase_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            tableCreator.EraseDatabase(DatabaseName);
+            ContentDialog deleteFileDialog = new ContentDialog
+            {
+                Title = "Delete all data from the database permanently?",
+                Content = "If you erase databse, you won't be able to recover it. Do you want to erase it?",
+                PrimaryButtonText = "Erase",
+                CloseButtonText = "Cancel"
+            };
+
+            ContentDialogResult result = await deleteFileDialog.ShowAsync();
+
+            // Delete the file if the user clicked the primary button.
+            /// Otherwise, do nothing.
+            if (result == ContentDialogResult.Primary)
+            {
+                tableCreator.EraseDatabase(DatabaseName);
+                CoursesList.Clear();
+                dataGrid.ItemsSource = new List<string> { "All data from the database has been deleted." };
+            }
+            else
+            {
+                // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                // Do nothing.
+            }
         }
 
         private void Find_Courses(object sender, RoutedEventArgs e)
@@ -80,8 +116,8 @@ namespace App1
 
         private void Find_Students(object sender, RoutedEventArgs e)
         {
-                string courseId = Get_Students_For_Course_Box.Text.ToString();
-                List<string> students = dataRetrievalClass.GetStudentsForCourse(courseId);
+            string courseId = combo;
+            List<string> students = dataRetrievalClass.GetStudentsForCourse(courseId);
 
                 dataGrid.ItemsSource = students;
         }
@@ -104,6 +140,40 @@ namespace App1
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AddStudentForm));
+        }
+
+        /*
+         * combo box selection
+         * */
+        private void ComboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            combo = comboBox.SelectedValue.ToString();
+        }
+
+        /*
+         * README flyout
+         * */
+        private async void Readme_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ContentDialog noWifiDialog = new ContentDialog
+            {
+                Title = "README",
+                Content = "Some text with instructions" +
+                "Some text with instructions" +
+                "Some text with instructions" +
+                "Some text with instructions" +
+                "Some text with instructions" +
+                "Some text with instructions" +
+                "Some text with instructions" +
+                "Some text with instructions" +
+                "Some text with instructions" +
+                "Some text with instructions",
+                CloseButtonText = "Ok"
+            };
+
+            ContentDialogResult result = await noWifiDialog.ShowAsync();
         }
 
     }

@@ -22,7 +22,7 @@
                     <Button Click="Find_Courses" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
                     <NavigationViewItemSeparator/>
                     <NavigationViewItemHeader Content="Find All Students Enrolled in a Course"/>
-                    <TextBox Name="Get_Students_For_Course_Box" Height="30" Width="190" Margin="-11,0,12,0" PlaceholderText="e.g 2808ICT_3215_NA"></TextBox>
+                    <ComboBox Name="ComboxBox1" Margin="-11,0,12,0" ItemsSource="{x:Bind CoursesList}" Width="150" SelectionChanged="ComboBox1_SelectionChanged"></ComboBox>
                     <Button Click="Find_Students" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
                     <NavigationViewItemSeparator/>
                     <NavigationViewItemHeader Content="Find Student By Name or sNumber"/> 
@@ -30,7 +30,7 @@
                     <Button Click="Find_Individual_Student" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
 
                     <NavigationViewItemSeparator/>
-                    <NavigationViewItemHeader Content="Find Submet Masks By sNumber"/>
+                    <NavigationViewItemHeader Content="Find Subnet Masks By sNumber"/>
                     <TextBox Name="Find_Networks_By_Student_Id_Box" Height="30" Width="190" Margin="-11,0,12,0" PlaceholderText="e.g s5092985" HorizontalAlignment="Right"></TextBox>
                     <Button Click="Find_Networks_By_Student_Id" Height="30" Width="190" Margin="-11,0,12,0">Find</Button>
 
@@ -38,7 +38,7 @@
                     <HyperlinkButton Content="Add New..." Click="HyperlinkButton_Click" HorizontalAlignment="Center"/>
                     <NavigationViewItemSeparator/>
                     <NavigationViewItemHeader Content="Help"/>
-                    <NavigationViewItem Content="README"/>
+                    <NavigationViewItem Content="README" Tapped="Readme_Tapped"/>
                 </NavigationView.MenuItems>
                 <controls:DataGrid x:Name="dataGrid">
 
