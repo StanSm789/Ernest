@@ -76,17 +76,9 @@ namespace App1
          * */
         void DeleteCourseButton_Click(object sender, RoutedEventArgs e)
         {
-            string courseNumber = this.courseDetails.Text.Trim();
-
-            if (courseDao.FindById(courseNumber) == null)
-            {
-                this.ErrorMessageForDeletingStudent.Text = "Course does not exist";
-            }
-            else
-            {
-                courseDao.DeleteById(courseNumber);
-                this.Frame.Navigate(typeof(MainPage));
-            }
+            string courseNumber = combo;
+            courseDao.DeleteById(courseNumber);
+            this.Frame.Navigate(typeof(MainPage));
         }
 
         /*
@@ -129,7 +121,7 @@ namespace App1
         }
 
         /*
-         * combo box selection
+         * combo box selection for deleiting student from course
          * */
         private void ComboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -138,5 +130,14 @@ namespace App1
             combo = comboBox.SelectedValue.ToString();
         }
 
+        /*
+         * combo box selection for deleting existing course
+         * */
+        private void ComboxBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            combo = comboBox.SelectedValue.ToString();
+        }
     }
 }

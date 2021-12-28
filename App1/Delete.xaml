@@ -30,7 +30,7 @@
                 <StackPanel>
 
                     <TextBlock Text="Delete Course" Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox x:Name="courseDetails" PlaceholderText="e.g 2808ICT_3215_NA" Header="Course" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
+                    <ComboBox Margin="0,24,0,0" Name="ComboxBox2" Header= "Course" ItemsSource="{x:Bind CoursesList}" Width="150" SelectionChanged="ComboxBox2_SelectionChanged"></ComboBox>
 
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Delete" Margin="0,24" Click="DeleteCourseButton_Click"/>

@@ -50,6 +50,9 @@ namespace App1
             }
         }
 
+        /*
+         * Uploading .csv, .xls, or .xlsx file button
+         * */
         private async void NavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
@@ -62,23 +65,34 @@ namespace App1
 
             StorageFile file = await picker.PickSingleFileAsync();
 
-            if (file != null)
+            try
             {
-                string excelFile = await FileIO.ReadTextAsync(file);
-                ExcelParser excelParser = new ExcelParser(studentDao, courseDao, networkDao);
-                excelParser.WriteToDatabase(excelParser.ReadFromExcel(excelFile));
+                if (file != null)
+                {
+                    string excelFile = await FileIO.ReadTextAsync(file);
+                    ExcelParser excelParser = new ExcelParser(studentDao, courseDao, networkDao);
+                    excelParser.WriteToDatabase(excelParser.ReadFromExcel(excelFile));
 
-                List<Student> students = studentDao.FindAll();
-                dataGrid.ItemsSource = students;
-            }
+                    List<Student> students = studentDao.FindAll();
+                    dataGrid.ItemsSource = students;
+                }
 
-            List<Course> courses = courseDao.FindAll();
-            foreach (Course course in courses)
+                List<Course> courses = courseDao.FindAll();
+                foreach (Course course in courses)
+                {
+                    CoursesList.Add(course.Id); // combo box selection
+                }
+            } 
+            catch
             {
-                CoursesList.Add(course.Id); // combo box selection
+                dataGrid.ItemsSource = new List<string> {"PLEASE INSERT CORRECTLY EDITED INPUT FILE"};
             }
+            
         }
 
+        /*
+         * Deleting all data from the database button
+         * */
         private async void EraseDatabase_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ContentDialog deleteFileDialog = new ContentDialog
@@ -106,6 +120,9 @@ namespace App1
             }
         }
 
+        /*
+         * Find courses by Student sNumber button
+         * */
         private void Find_Courses(object sender, RoutedEventArgs e)
         {
                 string studentId = Get_Courses_ForStudent_Box.Text.ToString();
@@ -114,6 +131,9 @@ namespace App1
                 dataGrid.ItemsSource = courses;
         }
 
+        /*
+         * Find students by course name button
+         * */
         private void Find_Students(object sender, RoutedEventArgs e)
         {
             string courseId = combo;
@@ -122,6 +142,9 @@ namespace App1
                 dataGrid.ItemsSource = students;
         }
 
+        /*
+         * Find student by keyword button
+         * */
         private void Find_Individual_Student(object sender, RoutedEventArgs e)
         {
             string keyword = Find_Student_By_Keyword_Box.Text.ToString();
@@ -129,6 +152,9 @@ namespace App1
             dataGrid.ItemsSource = students;
         }
 
+        /*
+         * Find subnet masks that belong to student button
+         * */
         private void Find_Networks_By_Student_Id(object sender, RoutedEventArgs e)
         {
             string studentId = Find_Networks_By_Student_Id_Box.Text.ToString();
@@ -137,11 +163,17 @@ namespace App1
             dataGrid.ItemsSource = subnetMasks;
         }
 
+        /*
+         * Hyperlink for creating new student/course/, adding course to student/subnet mask to student
+         * */
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AddStudentForm));
         }
 
+        /*
+         * Hyperlink for deleting existing student/course/, removing student from course/subnet mask from student
+         * */
         private void DeleteExistingButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Delete));
