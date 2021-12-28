@@ -54,7 +54,8 @@ namespace App1.Models
         public override string ToString()
         {
             return "Student ID: " + Id + 
-                " Student name: " + FirstName + " " + LastName;
+                " Student name: " + FirstName + " " + LastName +
+                " Courses: " + string.Join(",", Courses);
         }
 
     }

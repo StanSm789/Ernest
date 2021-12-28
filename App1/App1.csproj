@@ -140,6 +140,7 @@
     <Compile Include="Parser\ExcelParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableCreators\TableCreator.cs" />
+    <Compile Include="View\StudentView.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
