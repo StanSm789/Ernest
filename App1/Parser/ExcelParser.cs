@@ -19,6 +19,9 @@ namespace App1.Parser
             NetworkDao = networkDao;
         }
 
+        /*
+         * The function reads data from Excel file and saves every cell into a temporary object (Obj class)
+         * */
         public List<Obj> ReadFromExcel(string inputString)
         {
             List<string[]> lines = SplitString(inputString);
@@ -39,6 +42,9 @@ namespace App1.Parser
             return _data;
         }
 
+        /*
+         * The function writes data into the database
+         * */
         public void WriteToDatabase(List<Obj> _data)
         {
             if(StudentDao.CheckIfStudentATableIsEmpty() == 0) // checking if students table does not exist and insert new data
@@ -80,6 +86,9 @@ namespace App1.Parser
             
         }
 
+        /*
+         * The function splits a row from Excel file into a list of strings
+         * */
         private List<string[]> SplitString(string inputString)
         {
             List<string[]> result = new List<string[]>();
@@ -95,7 +104,10 @@ namespace App1.Parser
             return result;
         }
 
-        private List<Obj> GetAllExistingStudents() //getting all existing students from the database
+        /*
+         * The function gets all existing students from the database
+         * */
+        private List<Obj> GetAllExistingStudents() 
         {
             List<Student> existingStudents = StudentDao.FindAll();
             List<Obj> result = new List<Obj>();
@@ -117,6 +129,9 @@ namespace App1.Parser
         }
     }
 
+         /*
+         * This class is used to store data from each row of Excel file
+         * */
     public class Obj
     {
         public string StudentId { get; set; }
@@ -124,4 +139,5 @@ namespace App1.Parser
         public string LastName { get; set; }
         public string ChildCourse { get; set; }
     }
+
 }
