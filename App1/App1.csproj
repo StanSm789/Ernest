@@ -128,6 +128,9 @@
     <Compile Include="Dao\Impl\NetworkDao.cs" />
     <Compile Include="Dao\Impl\StudentDao.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="Delete.xaml.cs">
+      <DependentUpon>Delete.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AddStudentForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Delete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -150,6 +150,30 @@ namespace App1.Dao.Impl
         }
 
         /*
+         * This function is used to delete data from Networks table by STUDENT_ID and SUBNET_MASK
+         * */
+        public void DeleteBySubnetMaskAndStudentID(string subnetMask, string studentId)
+        {
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                using (var transaction = db.BeginTransaction())
+                {
+                    var del = db.CreateCommand();
+                    del.CommandText = $"DELETE FROM NETWORKS WHERE SUBNET_MASK ='{subnetMask}' and STUDENT_ID='{studentId}';";
+                    del.ExecuteNonQuery();
+
+                    transaction.Commit();
+                }
+
+                db.Close();
+            }
+        }
+
+        /*
          * This function is used to delete data from Networks table by STUDENT_ID. This method is used in ExcelParser class under Parser folder
          * */
         public void DeleteByStudentId(string id)
@@ -171,6 +195,35 @@ namespace App1.Dao.Impl
 
                 db.Close();
             }
+        }
+
+        /*
+         * This function checks if subnet mask exists in the database
+         * */
+        public int CheckIfSubnetMaskExists(string subnetMask)
+        {
+            string result = null;
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                var cmd = db.CreateCommand();
+                cmd.CommandText = $"select count(*) from NETWORKS WHERE SUBNET_MASK='{subnetMask}';";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result = reader.GetString(0);
+                    }
+                }
+
+                db.Close();
+            }
+
+            return Int32.Parse(result);
         }
 
     }

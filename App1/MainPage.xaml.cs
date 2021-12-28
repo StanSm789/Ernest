@@ -142,6 +142,11 @@ namespace App1
             this.Frame.Navigate(typeof(AddStudentForm));
         }
 
+        private void DeleteExistingButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Delete));
+        }
+
         /*
          * combo box selection
          * */

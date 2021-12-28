@@ -36,6 +36,7 @@
 
                     <NavigationViewItemSeparator/>
                     <HyperlinkButton Content="Add New..." Click="HyperlinkButton_Click" HorizontalAlignment="Center"/>
+                    <HyperlinkButton Content="Delete Existing..." Click="DeleteExistingButton_Click" HorizontalAlignment="Center"/>
                     <NavigationViewItemSeparator/>
                     <NavigationViewItemHeader Content="Help"/>
                     <NavigationViewItem Content="README" Tapped="Readme_Tapped"/>
