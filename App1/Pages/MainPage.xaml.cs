@@ -143,17 +143,6 @@ namespace App1
         }
 
         /*
-         * Find subnet masks that belong to student button
-         * */
-        private void Find_Networks_By_Student_Id(object sender, RoutedEventArgs e)
-        {
-            string studentId = Find_Networks_By_Student_Id_Box.Text.ToString();
-            List<string> subnetMasks = dataRetrievalClass.GetSubnetMasksByStudentId(studentId);
-
-            dataGrid.ItemsSource = subnetMasks;
-        }
-
-        /*
          * Hyperlink for creating new student/course/, adding course to student/subnet mask to student
          * */
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
