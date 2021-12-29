@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using App1.Models;
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,9 +16,9 @@ namespace App1.Dao.DataRetrieval
             Pathname = pathname;
         }
 
-        public List<string> GetCoursesForStudent(string studentId)
+        public List<Course> GetCoursesForStudent(string studentId)
         {
-            List<string> result = new List<string>();
+            List<Course> result = new List<Course>();
 
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
             using (SqliteConnection db =
@@ -33,9 +34,9 @@ namespace App1.Dao.DataRetrieval
                 {
                     while (reader.Read())
                     {
-                        string courseId = reader.GetString(0);
+                        Course course = new Course.Builder().WithId(reader.GetString(0)).Build();
 
-                        result.Add(courseId);
+                        result.Add(course);
                     }
                 }
 
@@ -45,9 +46,9 @@ namespace App1.Dao.DataRetrieval
             return result;
         }
 
-        public List<string> GetStudentsForCourse(string courseId)
+        public List<Student> GetStudentsForCourse(string courseId)
         {
-            List<string> result = new List<string>();
+            List<Student> result = new List<Student>();
 
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
             using (SqliteConnection db =
@@ -63,10 +64,8 @@ namespace App1.Dao.DataRetrieval
                 {
                     while (reader.Read())
                     {
-                        string student = "ID: " + reader.GetString(0) + ", Full Name: " + reader.GetString(1) + 
-                            " " + reader.GetString(2); 
-
-                        result.Add(student);
+                        result.Add(new Student.Builder().WithId(reader.GetString(0))
+                            .WithFirstName(reader.GetString(1)).WithLastName(reader.GetString(2)).Build());
                     }
                 }
 
@@ -76,9 +75,12 @@ namespace App1.Dao.DataRetrieval
             return result;
         }
 
-        public List<string> FindIndividualStudent(string keyword)
+        /*
+         * The function finds student and their courses by a keyword: sNumber, fName, lName
+         * */
+        public List<Student> FindIndividualStudent(string keyword)
         {
-            List<string> result = new List<string>();
+            List<Student> result = new List<Student>();
 
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
             using (SqliteConnection db =
@@ -94,8 +96,11 @@ namespace App1.Dao.DataRetrieval
                 {
                     while (reader.Read())
                     {
-                        string student = "ID: " + reader.GetString(0) + ", Full Name: " + reader.GetString(1) +
-                            " " + reader.GetString(2);
+
+
+                        Student student = new Student.Builder().WithId(reader.GetString(0))
+                            .WithFirstName(reader.GetString(1)).WithLastName(reader.GetString(2))
+                            .WithCourses(GetCoursesForStudent(reader.GetString(0))).Build();
 
                         result.Add(student);
                     }

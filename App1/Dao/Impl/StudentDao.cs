@@ -157,13 +157,41 @@ namespace App1.Dao.Impl
 
                 using (var transaction = db.BeginTransaction())
                 {
-                    var del = db.CreateCommand();
-                    del.CommandText = $"DELETE FROM STUDENTS_COURSES WHERE STUDENT_ID ='{id}';";
-                    del.ExecuteNonQuery();
+                    var deleteFromStudentsCoursesTable = db.CreateCommand();
+                    deleteFromStudentsCoursesTable.CommandText = $"DELETE FROM STUDENTS_COURSES WHERE STUDENT_ID ='{id}';";
+                    deleteFromStudentsCoursesTable.ExecuteNonQuery();
 
-                    var insertCmd = db.CreateCommand();
-                    insertCmd.CommandText = $"DELETE FROM STUDENTS WHERE STUDENT_ID ='{id}';";
-                    insertCmd.ExecuteNonQuery();
+                    var deleteFromNetworksTable = db.CreateCommand();
+                    deleteFromNetworksTable.CommandText = $"DELETE FROM NETWORKS WHERE STUDENT_ID ='{id}';";
+                    deleteFromNetworksTable.ExecuteNonQuery();
+
+                    var deleteFromStudentsTable = db.CreateCommand();
+                    deleteFromStudentsTable.CommandText = $"DELETE FROM STUDENTS WHERE STUDENT_ID ='{id}';";
+                    deleteFromStudentsTable.ExecuteNonQuery();
+
+                    transaction.Commit();
+                }
+
+                db.Close();
+            }
+        }
+
+        /*
+         * removing an existing student from course
+         * */
+        public void DeleteStudentFromCourse(string studentId, string courseId)
+        {
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                using (var transaction = db.BeginTransaction())
+                {
+                    var deleteFromStudentsCoursesTable = db.CreateCommand();
+                    deleteFromStudentsCoursesTable.CommandText = $"DELETE FROM STUDENTS_COURSES WHERE STUDENT_ID ='{studentId}' AND COURSE_ID='{courseId}';";
+                    deleteFromStudentsCoursesTable.ExecuteNonQuery();
 
                     transaction.Commit();
                 }

@@ -111,14 +111,21 @@ namespace App1
             string studentNumber = this.student_Number.Text.Trim();
             string course = combo;
 
-            if (studentDao.FindById(studentNumber) == null)
+            try
             {
-                this.ErrorMessageForAddingCourse_To_Student.Text = "Student with this sNumber does not exists";
-            } 
-            else
+                if (studentDao.FindById(studentNumber) == null)
+                {
+                    this.ErrorMessageForAddingCourse_To_Student.Text = "Student with this sNumber does not exists";
+                }
+                else
+                {
+                    courseDao.SaveStudentCourse(studentNumber, course);
+                    this.Frame.Navigate(typeof(MainPage));
+                }
+            }
+            catch
             {
-                courseDao.SaveStudentCourse(studentNumber, course);
-                this.Frame.Navigate(typeof(MainPage));
+                this.ErrorMessageForAddingCourse_To_Student.Text = $"Student already enrolled in {course} course";
             }
         }
 
@@ -178,6 +185,7 @@ namespace App1
 
            combo = comboBox.SelectedValue.ToString(); 
         }
+
     }
 }
 
