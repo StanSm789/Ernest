@@ -121,25 +121,14 @@ namespace App1
         }
 
         /*
-         * Find courses by Student sNumber button
-         * */
-        private void Find_Courses(object sender, RoutedEventArgs e)
-        {
-                string studentId = Get_Courses_ForStudent_Box.Text.ToString();
-                List<string> courses = dataRetrievalClass.GetCoursesForStudent(studentId);
-
-                dataGrid.ItemsSource = courses;
-        }
-
-        /*
          * Find students by course name button
          * */
         private void Find_Students(object sender, RoutedEventArgs e)
         {
             string courseId = combo;
-            List<string> students = dataRetrievalClass.GetStudentsForCourse(courseId);
+            List<Student> students = dataRetrievalClass.GetStudentsForCourse(courseId);
 
-                dataGrid.ItemsSource = students;
+            dataGrid.ItemsSource = students;
         }
 
         /*
@@ -148,8 +137,9 @@ namespace App1
         private void Find_Individual_Student(object sender, RoutedEventArgs e)
         {
             string keyword = Find_Student_By_Keyword_Box.Text.ToString();
-            List<string> students = dataRetrievalClass.FindIndividualStudent(keyword);
-            dataGrid.ItemsSource = students;
+            List<Student> students = dataRetrievalClass.FindIndividualStudent(keyword);
+            List<StudentView> studentsOnView = GetStudentsOnView(students);
+            dataGrid.ItemsSource = studentsOnView;
         }
 
         /*
