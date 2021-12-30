@@ -1,4 +1,5 @@
-﻿using App1.Dao.Impl;
+﻿using App1.Dao.DataRetrieval;
+using App1.Dao.Impl;
 using App1.Models;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,15 @@ namespace App1.Parser
         private StudentDao StudentDao;
         private CourseDao CourseDao;
         private NetworkDao NetworkDao;
+        private DataRetrievalClass DataRetrieval;
 
-        public ExcelParser(StudentDao studentDao, CourseDao courseDao, NetworkDao networkDao)
+        public ExcelParser(StudentDao studentDao, CourseDao courseDao, 
+            NetworkDao networkDao, DataRetrievalClass dataRetrieval)
         {
             StudentDao = studentDao;
             CourseDao = courseDao;
             NetworkDao = networkDao;
+            DataRetrieval = dataRetrieval;
         }
 
         /*
@@ -45,45 +49,43 @@ namespace App1.Parser
         /*
          * The function writes data into the database
          * */
-        public void WriteToDatabase(List<Obj> _data)
+        public void WriteToDatabase(List<Obj> inputStudents)
         {
-            if(StudentDao.CheckIfStudentATableIsEmpty() == 0) // checking if students table does not exist and insert new data
+            if (StudentDao.CheckIfStudentATableIsEmpty() == 0) // checking if students table does not exist and insert new data
             {
-                for (int i = 0; i < _data.Count; i++)
+                for (int i = 0; i < inputStudents.Count; i++)
                 {
-                    CourseDao.Save(new Course.Builder().WithId(_data[i].ChildCourse).Build());
+                    CourseDao.Save(new Course.Builder().WithId(inputStudents[i].ChildCourse).Build());
 
-                    Student student = new Student.Builder().WithId(_data[i].StudentId)
-                            .WithFirstName(_data[i].FirstName).WithLastName(_data[i].LastName).Build();
+                    Student student = new Student.Builder().WithId(inputStudents[i].StudentId)
+                            .WithFirstName(inputStudents[i].FirstName).WithLastName(inputStudents[i].LastName).Build();
                     StudentDao.Save(student);
 
-                    CourseDao.SaveStudentCourse(_data[i].StudentId, _data[i].ChildCourse);
+                    CourseDao.SaveStudentCourse(inputStudents[i].StudentId, inputStudents[i].ChildCourse);
                 }
             } else // if database already has data, update the database with new entries and remove students who dropped out
             {
-                List<Obj> existingStudents = GetAllExistingStudents(); //getting all students from the db
-                List<Obj> intersectStudents = _data.Select(i => i).Intersect(existingStudents).ToList(); //intersecting the existing students with new students
-                List<Obj> unitedList = intersectStudents.Union(_data).ToList(); // union the intersected students with new students
+                HashSet<string> distinctCoursesFromInputFile = GetDistinctCoursesFromInputFile(inputStudents); // getting distinct courses from the input file
 
-                CourseDao.EraseDatabase(); // removing existing data from the database
-
-                for (int i = 0; i < unitedList.Count; i++)
+                foreach (string courseId in distinctCoursesFromInputFile)
                 {
-                    CourseDao.Save(new Course.Builder().WithId(_data[i].ChildCourse).Build());
+                    CourseDao.DeleteById(courseId); // deleting courses by course id 
+                    CourseDao.Save(new Course.Builder().WithId(courseId).Build()); // saving the course again
+                }
 
-                    Student student = new Student.Builder().WithId(unitedList[i].StudentId)
-                            .WithFirstName(unitedList[i].FirstName).WithLastName(unitedList[i].LastName).Build();
-                    StudentDao.Save(student);
+                foreach (Obj student in inputStudents)
+                {
 
-                    CourseDao.SaveStudentCourse(unitedList[i].StudentId, unitedList[i].ChildCourse);
-
-                    if(StudentDao.FindById(student.Id) == null) //if student does not exist, remove their networks from NETWORKS table
+                    if (StudentDao.CheckIfStudentExists(student.StudentId) == 0) // if student does not exist add them into the database
                     {
-                        NetworkDao.DeleteByStudentId(student.Id);
+                        Student st = new Student.Builder().WithId(student.StudentId)
+                            .WithFirstName(student.FirstName).WithLastName(student.LastName).Build();
+                        StudentDao.Save(st);
                     }
+
+                    CourseDao.SaveStudentCourse(student.StudentId, student.ChildCourse); // saving student to course
                 }
             }
-            
         }
 
         /*
@@ -120,9 +122,24 @@ namespace App1.Parser
                     obj.StudentId = student.Id;
                     obj.FirstName = student.FirstName;
                     obj.LastName = student.LastName;
-                    obj.ChildCourse = student.Courses[i].ToString();
+                    obj.ChildCourse = student.Courses[i].Id;
                     result.Add(obj);
                 }
+            }
+
+            return result;
+        }
+
+        /*
+         * The function gets all distinct courses (distinction by campus) from the input data
+         * */
+        private HashSet<string> GetDistinctCoursesFromInputFile(List<Obj> students)
+        {
+            HashSet<string> result = new HashSet<string>();
+
+            foreach (Obj student in students)
+            {
+                result.Add(student.ChildCourse);
             }
 
             return result;

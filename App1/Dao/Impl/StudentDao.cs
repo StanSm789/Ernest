@@ -299,5 +299,34 @@ namespace App1.Dao.Impl
             }    
         }
 
+        /*
+         * This function checks if subnet mask exists in the database
+         * */
+        public int CheckIfStudentExists(string studentId)
+        {
+            string result = null;
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                var cmd = db.CreateCommand();
+                cmd.CommandText = $"select count(*) from STUDENTS WHERE STUDENT_ID='{studentId}';";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result = reader.GetString(0);
+                    }
+                }
+
+                db.Close();
+            }
+
+            return Int32.Parse(result);
+        }
+
     }
 }

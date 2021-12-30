@@ -38,13 +38,14 @@ namespace App1
         public TableCreator tableCreator = new TableCreator();
         public List<string> CoursesList = new List<string>(); // List for storing courses that appear in the database
         public string combo; // selection for combo box; "used in add course to studend"
+        public List<Course> courses;
 
         public MainPage()
         {
             this.InitializeComponent();
             dataGrid.ItemsSource = GetStudentsOnView(studentDao.FindAll()); // get students table every time when opening the application
 
-            List<Course> courses = courseDao.FindAll();
+            courses = courseDao.FindAll();
             foreach (Course course in courses)
             {
                 CoursesList.Add(course.Id); // combo box selection
@@ -71,17 +72,19 @@ namespace App1
                 if (file != null)
                 {
                     string excelFile = await FileIO.ReadTextAsync(file);
-                    ExcelParser excelParser = new ExcelParser(studentDao, courseDao, networkDao);
+                    ExcelParser excelParser = new ExcelParser(studentDao, courseDao, networkDao, dataRetrievalClass);
                     excelParser.WriteToDatabase(excelParser.ReadFromExcel(excelFile));
 
                     dataGrid.ItemsSource = GetStudentsOnView(studentDao.FindAll());
                 }
 
-                List<Course> courses = courseDao.FindAll();
+                
+                courses = courseDao.FindAll();
                 foreach (Course course in courses)
                 {
                     CoursesList.Add(course.Id); // combo box selection
                 }
+                this.Frame.Navigate(typeof(MainPage));
             } 
             catch
             {
@@ -125,6 +128,12 @@ namespace App1
          * */
         private void Find_Students(object sender, RoutedEventArgs e)
         {
+            /*List<Course> courses = courseDao.FindAll();
+            foreach (Course course in courses)
+            {
+                CoursesList.Add(course.Id); // combo box selection
+            }*/
+
             string courseId = combo;
             List<Student> students = dataRetrievalClass.GetStudentsForCourse(courseId);
 

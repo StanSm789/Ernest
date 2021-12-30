@@ -32,11 +32,12 @@ namespace App1
         public NetworkDao networkDao = new NetworkDao(DatabaseName);
         public DataRetrievalClass dataRetrievalClass = new DataRetrievalClass(DatabaseName);
         public List<string> CoursesList = new List<string>();
-        public string combo; // selection for combo box; "used in add course to studend"
+        public string combo; // selection for combo box, used to display all distinct courses from the database
 
         public Delete()
         {
             this.InitializeComponent();
+            dataGrid.ItemsSource = dataRetrievalClass.GetStudentsWithoutCourses(); // data grid for students without courses
 
             List<Course> courses = courseDao.FindAll();
             foreach (Course course in courses)

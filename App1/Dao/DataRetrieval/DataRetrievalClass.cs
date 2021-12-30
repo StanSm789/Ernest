@@ -145,6 +145,39 @@ namespace App1.Dao.DataRetrieval
             return result;
         }
 
+        /*
+         * The method is used to find students who are not enrolled in any courses
+         * */
+        public List<Student> GetStudentsWithoutCourses()
+        {
+            List<Student> result = new List<Student>();
+
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Pathname);
+            using (SqliteConnection db =
+              new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+
+                var cmd = db.CreateCommand();
+                //cmd.CommandText = "select S.STUDENT_ID, S.F_NAME, S.L_NAME from STUDENTS AS S, STUDENTS_COURSES AS SC where S.STUDENT_ID=SC.STUDENT_ID and SC.COURSE_ID=@id;";
+                //cmd.Parameters.AddWithValue("@id", courseId);
+                cmd.CommandText = "select S.STUDENT_ID, S.F_NAME, S.L_NAME from STUDENTS AS S LEFT JOIN STUDENTS_COURSES AS SC ON SC.STUDENT_ID = S.STUDENT_ID WHERE SC.STUDENT_ID IS NULL;";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new Student.Builder().WithId(reader.GetString(0))
+                            .WithFirstName(reader.GetString(1)).WithLastName(reader.GetString(2)).Build());
+                    }
+                }
+
+                db.Close();
+            }
+
+            return result;
+        }
+
     }
 
 }

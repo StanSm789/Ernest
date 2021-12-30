@@ -38,6 +38,7 @@ namespace App1
         public AddStudentForm()
         {
             this.InitializeComponent();
+            dataGrid.ItemsSource = dataRetrievalClass.GetStudentsWithoutCourses(); // data grid for students without courses
 
             List<Course> courses = courseDao.FindAll();
             foreach (Course course in courses)
