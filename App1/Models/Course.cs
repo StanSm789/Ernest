@@ -27,7 +27,7 @@ namespace App1.Models
 
         public override string ToString()
         {
-            return "Course ID: " + Id;
+            return Id;
         }
     }
 }

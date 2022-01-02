@@ -38,6 +38,7 @@ namespace App1
         public AddStudentForm()
         {
             this.InitializeComponent();
+            dataGrid.ItemsSource = dataRetrievalClass.GetStudentsWithoutCourses(); // data grid for students without courses
 
             List<Course> courses = courseDao.FindAll();
             foreach (Course course in courses)
@@ -138,6 +139,10 @@ namespace App1
             {
                 this.ErrorMessageNetwork.Text = "Student with this sNumber does not exists";
             }
+            else if (!IsValidIpAddress(network))
+            {
+                this.ErrorMessageNetwork.Text = "Please insert valid IPv4 address";
+            }
             else
             {
                 try
@@ -171,6 +176,18 @@ namespace App1
             Regex re = new Regex(strRegex);
 
             if (re.IsMatch(sNumber))
+                return (true);
+            else
+                return (false);
+        }
+
+        private bool IsValidIpAddress(string ipAddress)
+        {
+            string strRegex = @"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$";
+
+            Regex re = new Regex(strRegex);
+
+            if (re.IsMatch(ipAddress))
                 return (true);
             else
                 return (false);
