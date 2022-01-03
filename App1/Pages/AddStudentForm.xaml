@@ -66,17 +66,24 @@
                 </StackPanel>
             </PivotItem>
 
-            <PivotItem Header="Add Subnet Mask To Student" Margin="20">
+            <PivotItem Header="Add IPv4 Address To Student" Margin="20">
                 <StackPanel>
-                    <TextBlock Text="New Subnet Mask" Margin="0,24,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBlock Text="New IPv4 Address                                            All Students" Margin="0,24,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBox x:Name="studentNumber" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" RenderTransformOrigin="0.937,0.466"/>
-                    <TextBox x:Name="network" Header="SubnetMask" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
+                    <TextBox x:Name="network" Header="IPv4 Address" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Save" Margin="0,24" Click="Save_Network_Click"/>
                         <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
                         <TextBlock x:Name="ErrorMessageNetwork" Margin="0,24" TextWrapping="Wrap" Text="" Width="241" FontWeight="Bold" Foreground="Red" FontSize="10"/>
 
                     </StackPanel>
+
+                    <Grid Height="750" Width="800" Margin="300,-190,0,0">
+                        <controls:DataGrid x:Name="dataGridOne">
+
+                        </controls:DataGrid>
+                    </Grid>
+
                 </StackPanel>
             </PivotItem>
         </Pivot>

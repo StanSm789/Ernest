@@ -52,7 +52,7 @@
             <PivotItem Header="Remove Student From Course" Margin="20">
                 <StackPanel>
 
-                    <TextBlock Text="Remove Student From Course" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBlock Text="Remove Student From Course                         Students With Courses" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBox x:Name="student_Number" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" RenderTransformOrigin="0.937,0.466"/>
                     <ComboBox Margin="0,24,0,0" Name="ComboxBox1" Header= "Course" ItemsSource="{x:Bind CoursesList}" Width="150" SelectionChanged="ComboBox1_SelectionChanged"></ComboBox>
 
@@ -63,20 +63,33 @@
 
                     </StackPanel>
 
+                    <Grid Height="750" Width="800" Margin="300,-190,0,0">
+                        <controls:DataGrid x:Name="dataGridOne">
+
+                        </controls:DataGrid>
+                    </Grid>
+
                 </StackPanel>
             </PivotItem>
 
-            <PivotItem Header="Remove Subnet Mask From Student" Margin="20">
+            <PivotItem Header="Remove IPv4 Address From Student" Margin="20">
                 <StackPanel>
-                    <TextBlock Text="Remove Subnet Mask From Student" Margin="0,24,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBlock Text="Remove IPv4 Address From Student                Students With IPv4 Addresses" Margin="0,24,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBox x:Name="studentNumber" Header= "sNumber" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" RenderTransformOrigin="0.937,0.466"/>
-                    <TextBox x:Name="subnetMask" Header="Subnet Mask" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
+                    <TextBox x:Name="subnetMask" Header="IPv4 Address" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Remove" Margin="0,24" Click="DeleteNetwork_Click"/>
                         <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
                         <TextBlock x:Name="ErrorMessageNetwork" Margin="0,24" TextWrapping="Wrap" Text="" Width="241" FontWeight="Bold" Foreground="Red" FontSize="10"/>
 
                     </StackPanel>
+
+                    <Grid Height="750" Width="800" Margin="300,-190,0,0">
+                        <controls:DataGrid x:Name="dataGridTwo">
+
+                        </controls:DataGrid>
+                    </Grid>
+
                 </StackPanel>
             </PivotItem>
         </Pivot>

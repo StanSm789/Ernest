@@ -1,6 +1,7 @@
 ﻿using App1.Dao.DataRetrieval;
 using App1.Dao.Impl;
 using App1.Models;
+using App1.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,6 +39,8 @@ namespace App1
         {
             this.InitializeComponent();
             dataGrid.ItemsSource = dataRetrievalClass.GetStudentsWithoutCourses(); // data grid for students without courses
+            dataGridOne.ItemsSource = GetStudentsOnViewWithCourses(studentDao.FindAll()); // get all students with at least one enrolment  
+            dataGridTwo.ItemsSource = GetStudentsOnViewWithIpAddresses(studentDao.FindAll()); // get all students with at least one IP address
 
             List<Course> courses = courseDao.FindAll();
             foreach (Course course in courses)
@@ -140,5 +143,64 @@ namespace App1
 
             combo = comboBox.SelectedValue.ToString();
         }
+
+        /*
+         * This function gets information about students who have at least one enrolment
+         * */
+        private List<StudentView> GetStudentsOnViewWithCourses(List<Student> students)
+        {
+            List<StudentView> result = new List<StudentView>();
+
+            foreach (Student student in students)
+            {
+                if (student != null && student.Courses.Count != 0)
+                {
+                    List<string> subnetMasks = dataRetrievalClass.GetSubnetMasksByStudentId(student.Id);
+
+                    StudentView studentView = new StudentView();
+                    studentView.StudentId = student.Id;
+                    studentView.FirstName = student.FirstName;
+                    studentView.LastName = student.LastName;
+                    studentView.Courses = string.Join(", ", student.Courses);
+                    studentView.IPv4Addresses = string.Join(", ", subnetMasks);
+
+                    result.Add(studentView);
+                }
+            }
+
+            return result;
+        }
+
+        /*
+         * This function gets information about students who have at least one IP address
+         * */
+        private List<StudentView> GetStudentsOnViewWithIpAddresses(List<Student> students)
+        {
+            List<StudentView> result = new List<StudentView>();
+
+            foreach (Student student in students)
+            {
+                if (student != null)
+                {
+                    List<string> subnetMasks = dataRetrievalClass.GetSubnetMasksByStudentId(student.Id);
+
+                    if (subnetMasks.Count != 0)
+                    {
+                        StudentView studentView = new StudentView();
+                        studentView.StudentId = student.Id;
+                        studentView.FirstName = student.FirstName;
+                        studentView.LastName = student.LastName;
+                        studentView.Courses = string.Join(", ", student.Courses);
+                        studentView.IPv4Addresses = string.Join(", ", subnetMasks);
+
+                        result.Add(studentView);
+                    }
+                    
+                }
+            }
+
+            return result;
+        }
+
     }
 }

@@ -219,7 +219,7 @@ namespace App1
                     studentView.FirstName = student.FirstName;
                     studentView.LastName = student.LastName;
                     studentView.Courses = string.Join(", ", student.Courses);
-                    studentView.SubnetMasks = string.Join(", ", subnetMasks);
+                    studentView.IPv4Addresses = string.Join(", ", subnetMasks);
 
                     result.Add(studentView);
                 }

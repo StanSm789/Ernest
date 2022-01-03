@@ -2,6 +2,7 @@
 using App1.Dao.Impl;
 using App1.Models;
 using App1.TableCreators;
+using App1.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,6 +40,7 @@ namespace App1
         {
             this.InitializeComponent();
             dataGrid.ItemsSource = dataRetrievalClass.GetStudentsWithoutCourses(); // data grid for students without courses
+            dataGridOne.ItemsSource = GetStudentsOnView(studentDao.FindAll()); // get all students
 
             List<Course> courses = courseDao.FindAll();
             foreach (Course course in courses)
@@ -201,6 +203,33 @@ namespace App1
            ComboBox comboBox = sender as ComboBox;
 
            combo = comboBox.SelectedValue.ToString(); 
+        }
+
+        /*
+         * This function gets all information about Student, including their courses and subnet masks
+         * */
+        private List<StudentView> GetStudentsOnView(List<Student> students)
+        {
+            List<StudentView> result = new List<StudentView>();
+
+            foreach (Student student in students)
+            {
+                if (student != null)
+                {
+                    List<string> subnetMasks = dataRetrievalClass.GetSubnetMasksByStudentId(student.Id);
+
+                    StudentView studentView = new StudentView();
+                    studentView.StudentId = student.Id;
+                    studentView.FirstName = student.FirstName;
+                    studentView.LastName = student.LastName;
+                    studentView.Courses = string.Join(", ", student.Courses);
+                    studentView.IPv4Addresses = string.Join(", ", subnetMasks);
+
+                    result.Add(studentView);
+                }
+            }
+
+            return result;
         }
 
     }
