@@ -185,16 +185,12 @@ namespace App1
             ContentDialog noWifiDialog = new ContentDialog
             {
                 Title = "README",
-                Content = "Some text with instructions" +
-                "Some text with instructions" +
-                "Some text with instructions" +
-                "Some text with instructions" +
-                "Some text with instructions" +
-                "Some text with instructions" +
-                "Some text with instructions" +
-                "Some text with instructions" +
-                "Some text with instructions" +
-                "Some text with instructions",
+                Content = "1) \"Upload File\" button allows to upload a new file\n\n" +
+                "2) \"Erase Database\" button deletes all data from the database\n\n" +
+                "3) Search Box allows to find data about student by their name or sNumber\n\n" +
+                "4) Combo box allows to find data about students enrolled in a particular course\n\n" +
+                "5) \"Add New...\" hyperlink allows to add new data into the dstabase\n\n" +
+                "6) \"Delete Existing...\" hyperlink allows to delete existing data from the database",
                 CloseButtonText = "Ok"
             };
 
@@ -219,7 +215,7 @@ namespace App1
                     studentView.FirstName = student.FirstName;
                     studentView.LastName = student.LastName;
                     studentView.Courses = string.Join(", ", student.Courses);
-                    studentView.SubnetMasks = string.Join(", ", subnetMasks);
+                    studentView.IPv4Addresses = string.Join(", ", subnetMasks);
 
                     result.Add(studentView);
                 }

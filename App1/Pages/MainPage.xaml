@@ -11,7 +11,7 @@
 
     <Grid>
         <Grid>
-            <NavigationView HorizontalAlignment="Right" Width="1500">
+            <NavigationView HorizontalAlignment="Left" Width="1500">
                 <NavigationView.MenuItems>
                     <NavigationViewItemHeader Content="File"/>
                     <NavigationViewItem Content="Upload File" Icon="OpenFile" Tapped="NavigationViewItem_Tapped"/>
